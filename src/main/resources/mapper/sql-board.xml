@@ -12,9 +12,54 @@
 				created_datetime
 			FROM
 				t_board
-			WHERE
-				deleted_yn = 'N'
 			ORDER BY board_idx DESC
+		]]>
+	</select>
+	
+	<insert id="insertBoard" parameterType="board.dto.BoardDto">
+	
+		<![CDATA[
+			INSERT INTO t_board
+			(
+				board_idx,
+				title,
+				contents,
+				created_datetime,
+				creator_id
+			)
+			VALUES
+			(
+				seq_board.nextval,
+				#{title},
+				#{contents},
+				sysdate,
+				'admin'
+			)
+		]]>
+	</insert>
+	
+	<update id="updateHitCount" parameterType="int">
+		<![CDATA[
+			UPDATE
+				t_board
+			SET
+				hit_cnt = hit_cnt +1
+			WHERE
+				board_idx = #{boardIdx}
+		]]>>
+	</update>
+	
+	<select id="selectBoardDetail" parameterType="int" resultType="board.dto.BoardDto">
+		<![CDATA[
+			SELECT 
+				board_idx,
+				title,
+				hit_cnt,
+				created_datetime
+			FROM
+				t_board
+			WHERE
+				board_idx = #{boardIdx}
 		]]>
 	</select>
 
