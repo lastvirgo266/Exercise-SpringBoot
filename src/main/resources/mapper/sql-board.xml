@@ -12,6 +12,8 @@
 				created_datetime
 			FROM
 				t_board
+			WHERE
+				deleted_yn != 'Y'	
 			ORDER BY board_idx DESC
 		]]>
 	</select>
@@ -38,6 +40,7 @@
 		]]>
 	</insert>
 	
+	
 	<update id="updateHitCount" parameterType="int">
 		<![CDATA[
 			UPDATE
@@ -46,8 +49,9 @@
 				hit_cnt = hit_cnt +1
 			WHERE
 				board_idx = #{boardIdx}
-		]]>>
+		]]>
 	</update>
+	
 	
 	<select id="selectBoardDetail" parameterType="int" resultType="board.dto.BoardDto">
 		<![CDATA[
@@ -62,6 +66,32 @@
 				board_idx = #{boardIdx}
 		]]>
 	</select>
+	
+	
+	<update id="updateBoard" parameterType="board.dto.BoardDto">
+		<![CDATA[
+			UPDATE t_board SET
+				title = #{title},
+				contents = #{contents},
+				updated_datetime = sysdate,
+				updater_id = 'admin'
+			WHERE
+				board_idx = #{boardIdx}
+		]]>
+	</update>
+	
+	
+	
+	<update id="deleteBoard" parameterType="Int">
+		<![CDATA[
+			UPDATE t_board SET
+				deleted_yn = 'Y',
+				updated_datetime = sysdate,
+				updater_id = 'admin'
+			WHERE
+				board_idx = #{boardIdx}
+		]]>
+	</update>
 
 
 </mapper>
