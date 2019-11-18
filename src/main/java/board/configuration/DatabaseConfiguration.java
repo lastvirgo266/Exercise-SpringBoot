@@ -10,6 +10,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.context.ApplicationContext;
 
 import com.zaxxer.hikari.HikariConfig;
@@ -17,10 +20,18 @@ import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
 @PropertySource("classpath:/application.properties")
+//@EnableTransactionManagement //어노테이션 기반 트랜잭션 활성화
 public class DatabaseConfiguration {
 	
 	@Autowired
 	private ApplicationContext applicationContext;
+	
+//	@Bean
+//	public PlatformTransactionManager transactionManager() throws Exception
+//	{
+//		return new DataSourceTransactionManager(dataSource());
+//	}
+	
 	
 	@Bean
 	@ConfigurationProperties(prefix="spring.datasource.hikari")
@@ -58,6 +69,8 @@ public class DatabaseConfiguration {
 		return new org.apache.ibatis.session.Configuration();
 	}
 	
+	
+
 	
 
 }

@@ -6,8 +6,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+//@Transactional //여기에 어노테이션 붙여주면 트랜잭션 처리 가능
 public class BoardServiceImpl implements BoardService {
 	
 	@Autowired
@@ -29,6 +31,8 @@ public class BoardServiceImpl implements BoardService {
 	{
 		BoardDto board = boardMapper.selectBoardDetail(boardIdx);
 		boardMapper.updateHitCount(boardIdx);
+		//For test code
+		//int i = 10 / 0;
 		return board;
 	}
 	
