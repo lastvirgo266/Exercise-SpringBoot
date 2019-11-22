@@ -6,6 +6,16 @@
  - my batis를 쓸때 스프링에서는 resouce하위 폴더로 자동으로 xml을 매핑시켜주지만 부트에서는 경로를 지정해줘야한다.
 
 
+ # 구현된것들
+  - Oracle DB 연결
+  - Mybatis
+  - sl4j
+  - Interceptor
+  - AOP(Logger, Transaction)
+  - Exception(@ControllAdvice)
+  - Filter
+
+
 ## 2019-11-15
   부트를 작성하는데 Model and View의 요소에서 프론트에 파라미터를 전달해줄때 반드시 이름을 지정해줬는지 확인해야한다.
 
