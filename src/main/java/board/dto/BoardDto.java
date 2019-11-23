@@ -1,9 +1,13 @@
 package board.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
 public class BoardDto {
+	private List<BoardFileDto> fileList;
+	
 	private int boardIdx;
 	private String title;
 	private String contents;

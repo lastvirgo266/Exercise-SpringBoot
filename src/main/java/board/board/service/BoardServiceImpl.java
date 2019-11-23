@@ -80,6 +80,9 @@ public class BoardServiceImpl implements BoardService {
 	public BoardDto selectBoardDetail(int boardIdx) throws Exception
 	{
 		BoardDto board = boardMapper.selectBoardDetail(boardIdx);
+		List<BoardFileDto> fileList = boardMapper.selectBoardFileList(boardIdx);
+		board.setFileList(fileList);
+		
 		boardMapper.updateHitCount(boardIdx);
 		//For test code
 		//int i = 10 / 0;
@@ -99,4 +102,12 @@ public class BoardServiceImpl implements BoardService {
 	{
 		boardMapper.deleteBoard(boardIdx);
 	}
+	
+	@Override
+	public BoardFileDto selectBoardFileInformation(int idx, int boardIdx)
+	{
+		return boardMapper.selectBoardFileInformation(idx, boardIdx);
+	}
+	
+
 }
