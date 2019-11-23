@@ -14,7 +14,7 @@
   - AOP(Logger, Transaction)
   - Exception(@ControllAdvice)
   - Filter
-  - File Uploading
+  - File Uploading(MySLQ, Oracle구문 포함(다중 업로딩))
 
 
 ## 2019-11-15

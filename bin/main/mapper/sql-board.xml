@@ -18,6 +18,10 @@
 		]]>
 	</select>
 	
+	<!-- 
+	useGeneratedKeys 속성은 DBMS가 자동 생성키의 경우를 지원할 경우에 사용가능 
+	MySQL -> Auto Increment, Oracle -> 시퀀스 테이블이 따로있기때문에 SelectKey를 이용해햐암
+	  -->
 	<insert id="insertBoard" parameterType="board.dto.BoardDto">
 	
 		<![CDATA[
@@ -38,6 +42,11 @@
 				'admin'
 			)
 		]]>
+		
+		<!-- 시퀀스번호 반환(BoardServiceImple 쪽에 board.getboadIdx로 리턴값을 확인 할 수 있음)  -->
+		<selectKey keyProperty="boardIdx" resultType="int">
+			SELECT seq_board.currval FROM DUAL
+		</selectKey>
 	</insert>
 	
 	
@@ -92,6 +101,100 @@
 				board_idx = #{boardIdx}
 		]]>
 	</update>
+	
+<!-- MySQL 구문 -->
+<!--	
+	<insert id="insertBoardFileList" parameterType="board.dto.BoardFileDto">
+		<![CDATA[
+			INSERT INTO t_file
+			(
+			 idx,
+			 board_idx,
+			 original_file_name,
+			 stored_file_path,
+			 file_size,
+			 creator_id,
+			 created_datetime
+			 )
+			 VALUES
+		]]>
+		
+		<foreach collection="list" item="item" separator=",">			 
+			 (
+			  seq_board.nextval,
+			  #{item.boardIdx},
+			  #{item.originalFileName},
+			  #{item.storedFilePath},
+			  #{item.fileSize},
+			  'admin',
+			  sysdate
+			 )
+		</foreach>
+	</insert>
+-->
 
+
+	<!-- Oracle 구문(시퀀스때문에 이 구문은 에러가 남) -->
+	<!-- 
+	<insert id="insertBoardFileList" parameterType="board.dto.BoardFileDto">
+	-->
+		
+		<!-- VALUES가  여러개일 경우 separator가 필요함, 오라클의 경우는 여백이 separator임 -->
+		<!-- INSERT ALL을 사용함 -->
+
+<!--
+		<foreach collection="list" item="item" separator=" " open="INSERT ALL" close="SELECT * FROM DUAL">			 
+		   <![CDATA[
+		    INTO t_file
+			(
+			 idx,
+			 board_idx,
+			 original_file_name,
+			 stored_file_path,
+			 file_size,
+			 creator_id,
+			 created_datetime
+			 )
+			 
+			 VALUES
+			 (
+			  seq_board.nextval,
+			  #{item.boardIdx},
+			  #{item.originalFileName},
+			  #{item.storedFilePath},
+			  #{item.fileSize},
+			  'admin',
+			  sysdate
+			 )	]]>
+		</foreach>
+	</insert>
+	-->
+	
+	<!-- Oracle에서 업로딩 구문(sequence를 이용해야하기 때문에 foreach문 밖으로 뺐음) -->
+	<insert id="insertBoardFileList" parameterType="board.dto.BoardFileDto">
+		<!-- VALUES가  여러개일 경우 separator가 필요함, 오라클의 경우는 여백이 separator임 -->
+		INSERT INTO t_file
+		(
+			 idx,
+			 board_idx,
+			 original_file_name,
+			 stored_file_path,
+			 file_size,
+			 creator_id,
+			 created_datetime
+		)
+		
+		SELECT seq_board.nextval, A.* FROM(
+		<foreach collection="list" item="item" separator="UNION ALL ">			 
+		SELECT
+			  #{item.boardIdx} as boardIdx,
+			  #{item.originalFileName} as original_file_name,
+			  #{item.storedFilePath} as stored_file_path,
+			  #{item.fileSize} as file_size,
+			  'admin',
+			  sysdate
+			 FROM dual
+		</foreach>) A
+	</insert>
 
 </mapper>
