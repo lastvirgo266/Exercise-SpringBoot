@@ -3,7 +3,7 @@ package board.configuration;
 import java.nio.charset.Charset;
 
 import javax.servlet.Filter;
-
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -17,6 +17,7 @@ import board.interceptor.LoggerInterceptor;
 @Configuration
 public class WebMvcConfiguration implements WebMvcConfigurer{
 	
+	//인터셉터 빈
 	@Override
 	public void addInterceptors(InterceptorRegistry registry){
 		registry.addInterceptor(new LoggerInterceptor());
@@ -40,4 +41,16 @@ public class WebMvcConfiguration implements WebMvcConfigurer{
 //	{
 //		return new StringHttpMessageConverter(Charset.forName("UTF-8"));
 //	}
+	
+	
+	
+	@Bean
+	public CommonsMultipartResolver multipartResolver()
+	{
+		CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver();
+		
+		commonsMultipartResolver.setDefaultEncoding("UTF-8"); //파일의 인코딩을 UTF-8로 설정
+		commonsMultipartResolver.setMaxUploadSizePerFile(5 * 1024 * 1024); // 업로드 되는 파일의 크기를 제한 (단위 : byte)
+		return commonsMultipartResolver;
+	}
 }

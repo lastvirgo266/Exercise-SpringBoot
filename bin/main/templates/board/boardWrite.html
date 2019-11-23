@@ -8,7 +8,8 @@
 <body>
 	<div class="container">
 	    <h2>제목</h2>
-	    <form id="frm" name="frm" method="post" action="/board/insertBoard.do">
+	    <!-- 폼을 이용해서 데이터를 전송할 때 파일도 같이 첨부될 수 있도록 폼의 enctype 속성을 multipart/form-data로 지정 -->
+	    <form id="frm" name="frm" method="post" action="/board/insertBoard.do" enctype="multipart/form-data"> 
 	    	<table class="board_detail">
 	    		<tr>
 	    			<td>주제</td>
@@ -20,7 +21,9 @@
 	    			</td>
 	    		</tr>
 	    	</table>
-	    	<input type="submit" id="submit" value="제출" class="btn">
+	    	<!-- 파일을 첨부할수 있도록 첨부 태그 추가. multiple은 하나의 태그에 여러개의 파일 첨부 가능 -->
+	    	<input type="file" id="files" name="files" multiple="multiple">
+	    	<input type="submit" id="submit" value="저장" class="btn">
 	    </form>
     </div>
 </body>

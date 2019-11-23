@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import org.slf4j.Logger;
@@ -40,9 +41,9 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/board/insertBoard.do")
-	public String insertBoard(BoardDto board) throws Exception
+	public String insertBoard(BoardDto board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception
 	{
-		boardService.insertBoard(board);
+		boardService.insertBoard(board, multipartHttpServletRequest);
 		//Test
 		//System.out.println(board.getContents());
 		return "redirect:/board/openBoardList.do";
