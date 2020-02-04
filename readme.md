@@ -29,3 +29,13 @@
 
 ## 2019-11-23
   어떤 논리가 돌아갈때 걸쳐야 할 단계들을 생각해보면서 디버깅을 해야한다.
+
+
+## 2020-02-05
+  - REST API로 작성중(현재 node로 프로젝트 병행하고있음)
+  - <https://dydals5678.tistory.com/2> 상태코드 작성하는 방법
+
+##  org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'boardController': Unsatisfied dependency expressed through field 'boardService'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'boardServiceImpl': Unsatisfied dependency expressed through field 'boardMapper'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'boardMapper' defined in file [C:\Users\LaVi\Documents\Spring_Boot_Project\board\bin\main\board\board\mapper\BoardMapper.class]: Unsatisfied dependency expressed through bean property 'sqlSessionFactory'; nested exception is org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'sqlSessionFactory' defined in class path resource [board/configuration/DatabaseConfiguration.class]: Unsatisfied dependency expressed through method 'sqlSessionFactory' parameter 0; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'dataSource' defined in class path resource [board/configuration/DatabaseConfiguration.class]: Bean instantiation via factory method failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [javax.sql.DataSource]: Factory method 'dataSource' threw exception; nested exception is com.zaxxer.hikari.pool.HikariPool$PoolInitializationException: Failed to initialize pool: IO 오류: The Network Adapter could not establish the connection
+  - 결론부터 말하자면 DB 오류이다. 오라클이 안켜져 있어서 그랬다.
+  - <https://m.blog.naver.com/PostView.nhn?blogId=blogpyh&logNo=40209232034&proxyReferer=https%3A%2F%2Fwww.google.co.kr%2F>
+  - 이거 오라클 서비스 키면되는건데 안켜짐 --> 이유는 저번에 PL/SQL때문에 다른 오라클파일 가져오고 ORACLE_HOME 경로 지정해줬는데 이것때문에 오류난것으로 확인됨
