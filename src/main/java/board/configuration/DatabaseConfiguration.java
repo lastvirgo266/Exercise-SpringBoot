@@ -18,6 +18,8 @@ import org.springframework.context.ApplicationContext;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
+import java.util.Properties;
+
 @Configuration
 @PropertySource("classpath:/application.properties")
 //@EnableTransactionManagement //어노테이션 기반 트랜잭션 활성화
@@ -68,6 +70,15 @@ public class DatabaseConfiguration {
 	public org.apache.ibatis.session.Configuration mybatisConfig(){
 		return new org.apache.ibatis.session.Configuration();
 	}
+	
+	
+	@Bean
+	@ConfigurationProperties(prefix="spring.jpa")
+	public Properties hibernateConfig()	{
+		return new Properties();
+	}
+	
+	
 	
 	
 
