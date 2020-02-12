@@ -65,8 +65,8 @@ public class JpaBoardController {
 	
 	
 	@RequestMapping(value="/jpa/board/{boardIdx}", method=RequestMethod.DELETE)
-	public String deleteBoard(BoardEntity board) throws Exception{
-		jpaBoardService.deleteBoard(board, null);
+	public String deleteBoard(@PathVariable("boardIdx") int boardIdx) throws Exception{
+		jpaBoardService.deleteBoard(boardIdx);
 		return "redirect:/jpa/board";
 	}
 	

@@ -15,5 +15,5 @@ public interface JpaBoardRepository extends CrudRepository<BoardEntity, Integer>
 	
 	@Query("SELECT file FROM BoardFileEntity file WHERE board_idx = :boardIdx AND idx = :idx")
 	BoardFileEntity findBoardFile(@Param("boardIdx") int boardIdx, @Param("idx")int idx);
-
+	
 }

@@ -34,6 +34,9 @@ public class BoardEntity {
 	private String contents;
 	
 	@Column(nullable = false)
+	private int hitCnt = 0;
+	
+	@Column(nullable = false)
 	private String creatorId;
 	
 	@Column(nullable = false)

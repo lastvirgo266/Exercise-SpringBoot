@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.apache.commons.io.FileUtils;
 
 
 import board.board.entity.BoardEntity;
 import board.board.entity.BoardFileEntity;
 import board.board.repository.JpaBoardRepository;
+import board.common.FileUtils;
 
 public class JpaBoardServiceImpl implements JpaBoardService {
 	
@@ -61,7 +61,7 @@ public class JpaBoardServiceImpl implements JpaBoardService {
 	
 	
 	@Override
-	public void deletBoard(int boardIdx) {
+	public void deleteBoard(int boardIdx) {
 		jpaBoardRepository.deleteById(boardIdx);
 	}
 	

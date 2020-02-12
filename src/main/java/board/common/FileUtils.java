@@ -12,13 +12,14 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import board.board.entity.BoardFileEntity;
 import board.dto.BoardFileDto;
 
 //Component 어노테이션을 이용해서 FileUtils 클래스를 스프링의 빈으로 등록
 @Component
 public class FileUtils {
 	
-	public List<BoardFileDto> parseFileInfo(int boardIdx, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception
+	public List<BoardFileEntity> parseFileInfo(MultipartHttpServletRequest multipartHttpServletRequest) throws Exception
 	{
 		if(ObjectUtils.isEmpty(multipartHttpServletRequest))
 		{
@@ -26,7 +27,7 @@ public class FileUtils {
 		}
 		
 		
-		List<BoardFileDto> fileList = new ArrayList<>();
+		List<BoardFileEntity> fileList = new ArrayList<>();
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("yyyyMMdd");
 		ZonedDateTime current = ZonedDateTime.now(); //오늘의 날짜를 확인하기 위해 사용(JDK 1.8 부터 사용가능)
 		String path = "images/"+current.format(format);
@@ -90,11 +91,12 @@ public class FileUtils {
 					newFileName = Long.toString(System.nanoTime()) + originalFileExtension; //서버에 저장될 파일 이름을 생성, 서버에 같은 이름의 파일이 있으면 절대 중복되지 않을 이름으로 바꿔줌
 					
 					//데이터베이스에 저장할 파일 정보를 앞에서 만든 BoardFileDto에 저장함
-					BoardFileDto boardFile = new BoardFileDto();
-					boardFile.setBoardIdx(boardIdx); // 게시글 번호
+					BoardFileEntity boardFile = new BoardFileEntity();
+					//boardFile.setBoardIdx(boardIdx); // 게시글 번호
 					boardFile.setFileSize(multipartFile.getSize()); //파일의 크기
 					boardFile.setOriginalFileName(multipartFile.getOriginalFilename()); //파일의 원래 이름
 					boardFile.setStoredFilePath(path + "/" + newFileName); //파일이 저장된 이름
+					boardFile.setCreatorId("admin");
 					fileList.add(boardFile);
 					
 					//업로드된 파일을 새로운 이름으로 바꾸어 지정된 경로에 저장

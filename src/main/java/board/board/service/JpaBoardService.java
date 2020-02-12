@@ -14,6 +14,6 @@ public interface JpaBoardService {
 	
 	void saveBoard(BoardEntity board, MultipartHttpServletRequest multipartHttpServletRequest) throws Exception;
 	BoardEntity selectBoardDetail(int boardIndx) throws Exception;
-	void deletBoard(int boardIdx);
+	void deleteBoard(int boardIdx);
 	BoardFileEntity selectBoardFileInformation(int boardIdx, int idx) throws Exception;
 }
